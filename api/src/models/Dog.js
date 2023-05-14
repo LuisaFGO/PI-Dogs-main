@@ -9,24 +9,24 @@ module.exports = (sequelize) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
+    nombre: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     imagen:{
       type: DataTypes.STRING,
       allowNull: false,
     },
-    name: {
+    altura:{
       type: DataTypes.STRING,
       allowNull: false,
     },
-    altura:{
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     peso:{
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     añosDeVida:{
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
   },
