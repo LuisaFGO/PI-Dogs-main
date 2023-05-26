@@ -1,7 +1,7 @@
 const { Router } = require('express');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-const { getAllDogs, createPost } = require('../controllers/controller.js')
+const { getAllDogs, createPost, getTemperament } = require('../controllers/controller.js')
 const { API_KEY } = process.env;
 
 
@@ -12,13 +12,7 @@ const router = Router();
 
 router.get('/dogs/:id', async (req, res) =>{
     const {id} = req.params;
-    //const source = isNaN(id) ? "bdd" : "api" ; 
-    //try {
-      //const response = await getById(id, source);
-      //res.status(200).json(response)
-    //} catch (error) {
-      //res.status(400).json({error: error.message});
-    //}
+    
     const dogTotal= await getAllDogs()
         if(id){
             let dogId= await dogTotal.filter(dog => dog.id == id)
@@ -49,5 +43,15 @@ router.post('/dogs', async (req, res) => {
      res.status(400).json({error: error.message});
    }
 })
+
+router.get('/temperaments', async (req, res) => {
+  try {
+    const temperament = await getTemperament();
+    res.json(temperament);
+  } catch (error) {
+    res.status(400).json({error: error.message});
+  }
+}
+)
 
 module.exports = router;

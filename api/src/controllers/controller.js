@@ -5,7 +5,7 @@ const { Dog, Temperaments } = require('../db');
 
 //Traigo info de la api
 const getApiInfo= async () =>{
-    const apiUrl= await axios.get(`https://api.thedogapi.com/v1/breeds?apiKey=${API_KEY}&addRecipeInformation=true&number=100`);
+    const apiUrl= await axios.get(`https://api.thedogapi.com/v1/breeds?apiKey=${API_KEY}`);
     //tarea: hacer un validador
     const apiInfo= await apiUrl.data.map(dog =>{
         return {
@@ -50,9 +50,23 @@ const createPost = async (nombre, imagen, altura, añosDeVida, peso, temperament
   newDog.addTemperament(dogtemperamentDb);
 }
 
+const getTemperament =async() =>{
+    const apiUrl= await axios.get(`https://api.thedogapi.com/v1/breeds?apiKey=${API_KEY}`);
+    const allTemperaments= await apiUrl.data.map(t => t.temperament);
+    const temps = allTemperaments.toString().split(",");
+    temps.forEach(tm => {
+      Temperaments.findOrCreate({
+          where: { nombre: tm}
+      })
+    })
+    const temperamentTypes = await Temperaments.findAll();
+    return temperamentTypes;
+    };
+
 
 
 module.exports = {
     getAllDogs,
     createPost,
+    getTemperament,
 }
